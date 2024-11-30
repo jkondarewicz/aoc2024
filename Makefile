@@ -1,5 +1,4 @@
 DEFAULT_GOAL: run
 
-
 run:
-	go run jkondarewicz/aoc25
+	go run cmd/aoc2024/*.go
