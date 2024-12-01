@@ -12,6 +12,7 @@ func Open(filename string) (FileContent, error) {
 	}
 	fileContent := string(data)
 	fileContentLineByLine := strings.Split(fileContent, "\n")
+	fileContentLineByLine = fileContentLineByLine[0:len(fileContentLineByLine) - 1]
 	return FileContent {
 		fileContent: fileContent,
 		fileContentLineByLine: fileContentLineByLine,
