@@ -6,6 +6,7 @@ import (
 	solution "github.comjkondarewicz/aoc2024/cmd/aoc2024/days"
 	day01 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/01"
 	day02 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/02"
+	day03 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/03"
 	"github.comjkondarewicz/aoc2024/internal/benchmark"
 )
 
@@ -22,6 +23,7 @@ func main() {
 	days := [] solution.Solution {
 		day01.Day01("cmd/aoc2024/days/01/" + filename),
 		day02.Day02("cmd/aoc2024/days/02/" + filename),
+		day03.Day03("cmd/aoc2024/days/03/" + filename),
 	}
 	for i := 0; i < len(days); i++ {
 		res, err := days[i].Part1Solution()
