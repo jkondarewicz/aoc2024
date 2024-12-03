@@ -23,25 +23,23 @@ func (s daySolution) Part2Solution() (benchmark.BenchmarkResult[string], error) 
 	return benchmark.Benchmark(s.part2)
 }
 
+
 type parser struct {
-	mulCommands []solutions.MulCommand
-	mulCommandsEnabled []solutions.MulCommand
-	enabled bool
+	mulCommands []solutions.MulSystemCommand
 }
 
 func (parser *parser) ReadLine(index int, line string) {
 	commandsRegexp := regexp.MustCompile(`mul\(\d+,\d+\)|do\(\)|don't\(\)`)
 	matches := commandsRegexp.FindAllString(line, -1)
-	commands := make([]solutions.MulCommand, len(matches))
-	commandsEnabled := make([]solutions.MulCommand, 0)
+	commands := make([]solutions.MulSystemCommand, 0)
 	digitsRegexp := regexp.MustCompile(`\d+`)
-	for index, match := range matches {
+	for _, match := range matches {
 		if match == "do()" {
-			parser.enabled = true
+			commands = append(commands, solutions.ActivateMul{})
 			continue
 		}
 		if match == "don't()" {
-			parser.enabled = false
+			commands = append(commands, solutions.DeactivateMul{})
 			continue
 		}
 
@@ -54,13 +52,9 @@ func (parser *parser) ReadLine(index int, line string) {
 		if error != nil {
 			panic(error)
 		}
-		commands[index] = solutions.MulCommand { X: x, Y: y }
-		if parser.enabled {
-			commandsEnabled = append(commandsEnabled, solutions.MulCommand { X: x, Y: y })
-		}
+		commands = append(commands, solutions.PerformCalcMul{ X: x, Y: y })
 	}
 	parser.mulCommands = append(parser.mulCommands, commands...)
-	parser.mulCommandsEnabled = append(parser.mulCommandsEnabled, commandsEnabled...)
 }
 
 func (parser *parser) toDay3Part1() solutions.Day03Part01 {
@@ -71,7 +65,7 @@ func (parser *parser) toDay3Part1() solutions.Day03Part01 {
 
 func (parser *parser) toDay3Part2() solutions.Day03Part02 {
 	return solutions.Day03Part02{
-		MulCommands: parser.mulCommandsEnabled,
+		MulCommands: parser.mulCommands,
 	}
 }
 
@@ -84,9 +78,7 @@ func Day03(filename string) solution.Solution {
 		}
 	}
 	parser := parser { 
-		enabled: true,
-		mulCommands: make([]solutions.MulCommand, 0),
-		mulCommandsEnabled: make([]solutions.MulCommand, 0),
+		mulCommands: make([]solutions.MulSystemCommand, 0),
 	}
 	file.ProcessLineByLine(&parser)
 	part1 := parser.toDay3Part1()
