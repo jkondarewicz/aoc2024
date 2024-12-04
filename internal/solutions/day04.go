@@ -28,8 +28,8 @@ func isXmasWord(chars [][]rune, startingPoint aocmath.Vertex, direction aocmath.
 			//out of bound means return false
 			return false
 		} 
-		charOfWord := chars[currentPoint.Y][currentPoint.X]
-		nextCharOfWordId := xmas[charOfWord]
+		nextCharOfWord := chars[currentPoint.Y][currentPoint.X]
+		nextCharOfWordId := xmas[nextCharOfWord]
 		isNextCharContinueWord := (nextCharOfWordId - currentCharOfWordId) == 1
 		if isNextCharContinueWord {
 			currentCharOfWordId = nextCharOfWordId
