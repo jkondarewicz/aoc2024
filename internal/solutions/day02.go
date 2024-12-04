@@ -17,7 +17,7 @@ type reportDiff struct {
 func (r Report) toReportDiff() reportDiff {
 	diffs := make([]int, len(r.Nums) - 1)
 	for i := 1; i < len(r.Nums); i++ {
-		diff := aocmath.Vertex { A: r.Nums[i - 1], B: r.Nums[i] }.Diff()
+		diff := aocmath.Vertex { X: r.Nums[i - 1], Y: r.Nums[i] }.Diff()
 		diffs[i - 1] = diff
 	}
 	return reportDiff { diffs: diffs, nums: r.Nums }

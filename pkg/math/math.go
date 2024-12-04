@@ -29,12 +29,17 @@ func Normalize(a int) int {
 	}
 	return a / Abs(a)
 }
+
 type Vertex struct {
-	A int
-	B int
+	X int
+	Y int
+}
+
+func (vert Vertex) Add(vert2 Vertex) Vertex {
+	return Vertex{X: vert.X + vert2.X, Y: vert.Y + vert2.Y}
 }
 func (vert Vertex) Diff() int {
-	return vert.B - vert.A
+	return vert.Y - vert.X
 }
 func (vert Vertex) DiffNormalized() int {
 	diff := vert.Diff()
