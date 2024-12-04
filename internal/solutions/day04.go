@@ -19,25 +19,25 @@ var directions []aocmath.Vertex = []aocmath.Vertex{
 var xmas map[rune]int = map[rune]int{'X': 0, 'M': 1, 'A': 2, 'S': 3}
 var mas map[rune]int = map[rune]int{'M': 1, 'S': -1, 'X': 0, 'A': 0}
 
-func findWord(chars [][]rune, startingPoint aocmath.Vertex, direction aocmath.Vertex) int {
-	currentWordIndex := -1
+func isXmasWord(chars [][]rune, startingPoint aocmath.Vertex, direction aocmath.Vertex) bool {
+	currentCharOfWordId := -1
 	currentPoint := startingPoint
 	for {
-		if currentPoint.Y < len(chars) && currentPoint.Y >= 0 &&
-			currentPoint.X < len(chars[currentPoint.Y]) && currentPoint.X >= 0 {
-			char := chars[currentPoint.Y][currentPoint.X]
-			newCurrentWordIndex := xmas[char]
-			isNextLetterContinueWord := (newCurrentWordIndex - currentWordIndex) == 1
-			if isNextLetterContinueWord {
-				currentWordIndex = newCurrentWordIndex
-				if currentWordIndex == xmas['S'] {
-					return 1
-				}
-			} else {
-				return 0
+		if !(currentPoint.Y < len(chars) && currentPoint.Y >= 0 &&
+			currentPoint.X < len(chars[currentPoint.Y]) && currentPoint.X >= 0) {
+			//out of bound means return false
+			return false
+		} 
+		charOfWord := chars[currentPoint.Y][currentPoint.X]
+		nextCharOfWordId := xmas[charOfWord]
+		isNextCharContinueWord := (nextCharOfWordId - currentCharOfWordId) == 1
+		if isNextCharContinueWord {
+			currentCharOfWordId = nextCharOfWordId
+			if currentCharOfWordId == xmas['S'] {
+				return true
 			}
 		} else {
-			return 0
+			return false
 		}
 		currentPoint = currentPoint.Add(direction)
 	}
@@ -72,7 +72,9 @@ func (data *Day04Part01) Exec() (string, error) {
 	for y, row := range data.Chars {
 		for x := range row {
 			for _, direction := range directions {
-				result += findWord(data.Chars, aocmath.Vertex{X: x, Y: y}, direction)
+				if isXmasWord(data.Chars, aocmath.Vertex{X: x, Y: y,}, direction) {
+					result++
+				}
 			}
 		}
 	}
