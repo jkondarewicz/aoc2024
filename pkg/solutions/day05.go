@@ -6,93 +6,111 @@ import (
 	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
 )
 
-type node struct {
-	page int
-	nextNodes []*node
-	visited bool
+type pageRule struct {
+	page   int
+	before map[int]bool
 }
-func (n *node) childVisited() bool {
-	for _, node := range n.nextNodes {
-		if node.visited {
-			return true
-		} else if len(node.nextNodes) > 0 {
-			for _, node = range node.nextNodes {
-				if node.childVisited() {
-					return true
-				}
-			}
+func makePageRules(rules []aocmath.Vertex) map[int]*pageRule {
+	pageRules := make(map[int]*pageRule)
+	for _, page := range rules {
+		if pageRules[page.X] == nil {
+			pageRules[page.X] = &pageRule{page: page.X, before: make(map[int]bool),}
 		}
+		pageRules[page.X].before[page.Y] = true
 	}
-	return false
-}
-func createNode(page int) *node {
-	return &node { page: page, nextNodes: make([]*node, 0), visited: false}
-}
-
-type nodeHolder struct {
-	nodes map[int]*node
-}
-func (nodeHolder *nodeHolder) reset() {
-	for _, value := range nodeHolder.nodes {
-		value.visited = false
-	}
-}
-func (nodeHolder *nodeHolder) addNode(before int, after int) *node {
-	beforeNode := nodeHolder.nodes[before]
-	afterNode := nodeHolder.nodes[after]
-	if beforeNode == nil {
-		beforeNode = createNode(before)
-	}
-	if afterNode == nil {
-		afterNode = createNode(after)
-	}
-	beforeNode.nextNodes = append(beforeNode.nextNodes, afterNode)
-	nodeHolder.nodes[before] = beforeNode
-	nodeHolder.nodes[after] = afterNode
-	return beforeNode
+	return pageRules
 }
 
 type Day05Part01 struct {
 	Rules []aocmath.Vertex
 	Pages [][]int
 }
-func (nodeHolder *nodeHolder) isCorrect(pages []int) bool {
-	for _, page := range pages {
-		node := nodeHolder.nodes[page]
-		if node == nil {
-			continue
-		}
-		node.visited = true
-		if node.childVisited() {
-			return false
-		}
-	}
-	return true
-}
 type Day05Part02 struct {
-	Chars [][]rune
-}
-
-func generateNodeHolder(rules []aocmath.Vertex) nodeHolder {
-	nodeHolder := nodeHolder { nodes: make(map[int]*node)}
-	for _, rule := range rules {
-		nodeHolder.addNode(rule.X, rule.Y)
-	}
-	return nodeHolder
+	Rules []aocmath.Vertex
+	Pages [][]int
 }
 
 func (data *Day05Part01) Exec() (string, error) {
+	pageRules := makePageRules(data.Rules)
 	result := 0
-	nodeHolder := generateNodeHolder(data.Rules)
 	for _, pages := range data.Pages {
-		if nodeHolder.isCorrect(pages) {
+		visited := make(map[int]bool)
+		correct := true
+		for _, page := range pages {
+			visited[page] = true
+			pageRule := pageRules[page]
+			if pageRule == nil {
+				continue
+			}
+			for shouldBeBefore := range pageRule.before {
+				if visited[shouldBeBefore] {
+					correct = false
+					break
+				}
+			}
+		}
+		if correct {
 			result += pages[len(pages) / 2]
 		}
-		nodeHolder.reset()
 	}
 	return strconv.Itoa(result), nil
 }
 
 func (data *Day05Part02) Exec() (string, error) {
-	return "", nil
+	pageRules := makePageRules(data.Rules)
+	result := 0
+	for _, pages := range data.Pages {
+		correctedData, corrected := correctData(pages, pageRules, false)
+		if corrected {
+			result += correctedData[len(correctedData) / 2]
+		}
+	}
+	return strconv.Itoa(result), nil
+}
+
+type visitedNumber struct {
+	index int
+	visited bool
+}
+
+func moveElement(slice []int, fromIndex int, toIndex int) []int {
+	if fromIndex < 0 || fromIndex >= len(slice) || toIndex < 0 || toIndex >= len(slice) {
+		return slice
+	}
+
+	// Get the element to move
+	element := slice[fromIndex]
+
+	// Remove the element from the original position
+	slice = append(slice[:fromIndex], slice[fromIndex+1:]...)
+
+	// Insert the element at the new position
+	slice = append(slice[:toIndex], append([]int{element}, slice[toIndex:]...)...)
+
+	return slice
+}
+
+func correctData(pages []int, pageRules map[int]*pageRule, corrected bool) ([]int, bool) {
+	visited := make(map[int]visitedNumber)
+	newPages := make([]int, 0)
+	for index, page := range pages {
+		visited[page] = visitedNumber { index: index, visited: true,}
+		pageRule := pageRules[page]
+		if pageRule == nil {
+			continue
+		}
+		for shouldBeBefore := range pageRule.before {
+			if visited[shouldBeBefore].visited {
+				newPages = moveElement(pages, index, visited[shouldBeBefore].index)
+				break
+			}
+		}
+		if len(newPages) > 0 {
+			break
+		}
+	}
+	if len(newPages) > 0 {
+		return correctData(newPages, pageRules, true)
+	}
+	return pages, corrected
 }

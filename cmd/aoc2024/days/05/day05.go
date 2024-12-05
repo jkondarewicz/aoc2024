@@ -43,7 +43,10 @@ func (parser *parser) toDay5Part1() solutions.Day05Part01 {
 }
 
 func (parser *parser) toDay5Part2() solutions.Day05Part02 {
-	return solutions.Day05Part02{}
+	return solutions.Day05Part02{
+		Rules: parser.order,
+		Pages: parser.pages,
+	}
 }
 
 type Day5Resolver struct{}
