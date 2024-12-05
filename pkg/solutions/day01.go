@@ -7,7 +7,6 @@ import (
 	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
 )
 
-
 type Day01Part01 struct {
 	Lefts []int
 	Rights []int

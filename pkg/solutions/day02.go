@@ -1,7 +1,6 @@
 package solutions
 
 import (
-	"fmt"
 	"strconv"
 
 	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
@@ -84,6 +83,5 @@ func (data *Day02Part02) Exec() (string, error) {
 			safeReports++
 		}
 	}
-	fmt.Println()
 	return strconv.Itoa(safeReports), nil
 }

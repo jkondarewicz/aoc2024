@@ -2,7 +2,7 @@ package benchmark
 
 import "time"
 
-type BenchmarkExec[T any] interface {
+type BenchmarkFunction[T any] interface {
 	Exec() (T, error)
 }
 
@@ -11,7 +11,7 @@ type BenchmarkResult[T any] struct {
 	Time int64
 }
 
-func Benchmark[T any](exec BenchmarkExec[T]) (BenchmarkResult[T], error) {
+func Benchmark[T any](exec BenchmarkFunction[T]) (BenchmarkResult[T], error) {
 	startTime := time.Now().UnixMilli()
 	executed, err := exec.Exec()
 	endTime := time.Now().UnixMilli()
