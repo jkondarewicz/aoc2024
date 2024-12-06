@@ -8,6 +8,7 @@ import (
 	day03 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/03"
 	day04 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/04"
 	day05 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/05"
+	day06 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/06"
 	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
 	"github.comjkondarewicz/aoc2024/internal/benchmark"
 )
@@ -15,20 +16,21 @@ import (
 
 func PerformAdventOfCode() {
 	daysMetadata := []dayMetadata{
-		{dir: "cmd/aoc2024/days/01/", resolverProvider: day01.Day1Resolver {}, part1TestSolution: "11", part2TestSolution: "31"},
-		{dir: "cmd/aoc2024/days/02/", resolverProvider: day02.Day2Resolver {}, part1TestSolution: "2", part2TestSolution: "4"},
-		{dir: "cmd/aoc2024/days/03/", resolverProvider: day03.Day3Resolver {}, part1TestSolution: "161", part2TestSolution: "48"},
-		{dir: "cmd/aoc2024/days/04/", resolverProvider: day04.Day4Resolver {}, part1TestSolution: "18", part2TestSolution: "9"},
-		{dir: "cmd/aoc2024/days/05/", resolverProvider: day05.Day5Resolver {}, part1TestSolution: "143", part2TestSolution: "123"},
+		{dir: "cmd/aoc2024/days/01/", resolverProvider: day01.Day1ResolverProvide, part1TestSolution: "11", part2TestSolution: "31"},
+		{dir: "cmd/aoc2024/days/02/", resolverProvider: day02.Day2ResolverProvide, part1TestSolution: "2", part2TestSolution: "4"},
+		{dir: "cmd/aoc2024/days/03/", resolverProvider: day03.Day3ResolverProvide, part1TestSolution: "161", part2TestSolution: "48"},
+		{dir: "cmd/aoc2024/days/04/", resolverProvider: day04.Day4ResolverProvide, part1TestSolution: "18", part2TestSolution: "9"},
+		{dir: "cmd/aoc2024/days/05/", resolverProvider: day05.Day5ResolverProvide, part1TestSolution: "143", part2TestSolution: "123"},
+		{dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "6"},
 	}
 	for index, dayMetadata := range daysMetadata {
 		day := index + 1
-		testDayResolver, error := dayMetadata.resolverProvider.ProvideDayResolver(fmt.Sprintf("%s%s", dayMetadata.dir, "test"))
+		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"))
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for test case", error)
 			break
 		}
-		dayResolver, error := dayMetadata.resolverProvider.ProvideDayResolver(fmt.Sprintf("%s%s", dayMetadata.dir, "real"))
+		dayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "real"))
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for real case", error)
 			break
@@ -77,7 +79,7 @@ func printSolution(day int, part int, err error, result benchmark.BenchmarkResul
 
 type dayMetadata struct {
 	dir               string
-	resolverProvider  solutionTypes.DayResolverProvider
+	resolverProvider  func(filename string) (solutionTypes.DayResolver, error)
 	part1TestSolution string
 	part2TestSolution string
 }

@@ -7,16 +7,17 @@ import (
 )
 
 type pageRule struct {
-	page   int
-	before map[int]bool
+	page         int
+	shouldBeNext map[int]bool
 }
+
 func makePageRules(rules []aocmath.Vertex) map[int]*pageRule {
 	pageRules := make(map[int]*pageRule)
 	for _, page := range rules {
 		if pageRules[page.X] == nil {
-			pageRules[page.X] = &pageRule{page: page.X, before: make(map[int]bool),}
+			pageRules[page.X] = &pageRule{page: page.X, shouldBeNext: make(map[int]bool)}
 		}
-		pageRules[page.X].before[page.Y] = true
+		pageRules[page.X].shouldBeNext[page.Y] = true
 	}
 	return pageRules
 }
@@ -42,7 +43,7 @@ func (data *Day05Part01) Exec() (string, error) {
 			if pageRule == nil {
 				continue
 			}
-			for shouldBeBefore := range pageRule.before {
+			for shouldBeBefore := range pageRule.shouldBeNext {
 				if visited[shouldBeBefore] {
 					correct = false
 					break
@@ -50,7 +51,7 @@ func (data *Day05Part01) Exec() (string, error) {
 			}
 		}
 		if correct {
-			result += pages[len(pages) / 2]
+			result += pages[len(pages)/2]
 		}
 	}
 	return strconv.Itoa(result), nil
@@ -62,14 +63,14 @@ func (data *Day05Part02) Exec() (string, error) {
 	for _, pages := range data.Pages {
 		correctedData, corrected := correctData(pages, pageRules, false)
 		if corrected {
-			result += correctedData[len(correctedData) / 2]
+			result += correctedData[len(correctedData)/2]
 		}
 	}
 	return strconv.Itoa(result), nil
 }
 
 type visitedNumber struct {
-	index int
+	index   int
 	visited bool
 }
 
@@ -94,12 +95,12 @@ func correctData(pages []int, pageRules map[int]*pageRule, corrected bool) ([]in
 	visited := make(map[int]visitedNumber)
 	newPages := make([]int, 0)
 	for index, page := range pages {
-		visited[page] = visitedNumber { index: index, visited: true,}
+		visited[page] = visitedNumber{index: index, visited: true}
 		pageRule := pageRules[page]
 		if pageRule == nil {
 			continue
 		}
-		for shouldBeBefore := range pageRule.before {
+		for shouldBeBefore := range pageRule.shouldBeNext {
 			if visited[shouldBeBefore].visited {
 				newPages = moveElement(pages, index, visited[shouldBeBefore].index)
 				break

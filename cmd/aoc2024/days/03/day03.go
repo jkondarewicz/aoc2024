@@ -54,8 +54,7 @@ func (parser *parser) toDay3Part2() solutions.Day03Part02 {
 	}
 }
 
-type Day3Resolver struct {}
-func (day1 Day3Resolver) ProvideDayResolver(filename string) (solutionTypes.DayResolver, error) {
+func Day3ResolverProvide(filename string) (solutionTypes.DayResolver, error) {
 	file, err := files.Open(filename) 
 	if err != nil {
 		return solutionTypes.DayResolver {}, err

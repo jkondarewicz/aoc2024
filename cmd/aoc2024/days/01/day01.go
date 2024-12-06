@@ -30,9 +30,7 @@ func (parser *parser) ReadLine(index int, line string) {
 	parser.rights[index] = right
 	parser.rightsPart2[right] = parser.rightsPart2[right] + 1
 }
-
-type Day1Resolver struct {}
-func (day1 Day1Resolver) ProvideDayResolver(filename string) (solutionTypes.DayResolver, error) {
+func Day1ResolverProvide(filename string) (solutionTypes.DayResolver, error) {
 	file, err := files.Open(filename) 
 	if err != nil {
 		return solutionTypes.DayResolver{}, err
