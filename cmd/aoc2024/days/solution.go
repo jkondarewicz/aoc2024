@@ -23,7 +23,7 @@ func PerformAdventOfCode() {
 		{dir: "cmd/aoc2024/days/03/", resolverProvider: day03.Day3ResolverProvide, part1TestSolution: "161", part2TestSolution: "48"},
 		{dir: "cmd/aoc2024/days/04/", resolverProvider: day04.Day4ResolverProvide, part1TestSolution: "18", part2TestSolution: "9"},
 		{dir: "cmd/aoc2024/days/05/", resolverProvider: day05.Day5ResolverProvide, part1TestSolution: "143", part2TestSolution: "123"},
-		{dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "41"},
+		{dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "6"},
 		{dir: "cmd/aoc2024/days/07/", resolverProvider: day07.Day7ResolverProvide, part1TestSolution: "3749", part2TestSolution: "11387"},
 		{dir: "cmd/aoc2024/days/08/", resolverProvider: day08.Day8ResolverProvide, part1TestSolution: "14", part2TestSolution: "34"},
 	}
