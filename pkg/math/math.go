@@ -38,6 +38,13 @@ type Vertex struct {
 func (vert Vertex) Add(vert2 Vertex) Vertex {
 	return Vertex{X: vert.X + vert2.X, Y: vert.Y + vert2.Y}
 }
+func (vert Vertex) Opposite() Vertex {
+	return Vertex{X: -vert.X, Y: -vert.Y}
+}
+func (vert Vertex) DiffBetweenVertexes(vert2 Vertex) Vertex {
+	return Vertex{X: vert2.X - vert.X, Y: vert2.Y - vert.Y}
+}
+
 func (vert Vertex) Diff() int {
 	return vert.Y - vert.X
 }
