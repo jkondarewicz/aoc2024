@@ -11,6 +11,7 @@ import (
 	day06 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/06"
 	day07 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/07"
 	day08 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/08"
+	day09 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/09"
 	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
 	"github.comjkondarewicz/aoc2024/internal/benchmark"
 )
@@ -26,6 +27,7 @@ func PerformAdventOfCode() {
 		{dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "6"},
 		{dir: "cmd/aoc2024/days/07/", resolverProvider: day07.Day7ResolverProvide, part1TestSolution: "3749", part2TestSolution: "11387"},
 		{dir: "cmd/aoc2024/days/08/", resolverProvider: day08.Day8ResolverProvide, part1TestSolution: "14", part2TestSolution: "34"},
+		{dir: "cmd/aoc2024/days/09/", resolverProvider: day09.Day9ResolverProvide, part1TestSolution: "1928", part2TestSolution: "2858"},
 	}
 	for index, dayMetadata := range daysMetadata {
 		day := index + 1
