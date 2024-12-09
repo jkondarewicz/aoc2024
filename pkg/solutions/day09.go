@@ -101,9 +101,7 @@ func (data *Day09Part02) Exec() (string, error) {
 		}
 		if currentBlock.isFileBlock() && !currentBlock.visited {
 			fulfillBlock := findFirstBlockToFulfill(currentBlock, &firstBlock)
-			if fulfillBlock == nil {
-				currentBlock = currentBlock.previous
-			} else {
+			if fulfillBlock != nil {
 				freeBlocks := fulfillBlock.blocks - currentBlock.blocks
 				fulfillBlock.blockValue = currentBlock.blockValue
 				fulfillBlock.blocks = currentBlock.blocks
@@ -118,9 +116,8 @@ func (data *Day09Part02) Exec() (string, error) {
 				}
 				currentBlock.blockValue = -1
 			}
-		} else {
-			currentBlock = currentBlock.previous
 		}
+		currentBlock = currentBlock.previous
 	}
 	var result int64 = 0
 	var index int = 0
