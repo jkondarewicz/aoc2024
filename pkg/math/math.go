@@ -35,6 +35,10 @@ type Vertex struct {
 	Y int
 }
 
+func NewVertex(x int, y int) Vertex {
+	return Vertex{X: x, Y: y}
+}
+
 func (vert Vertex) Add(vert2 Vertex) Vertex {
 	return Vertex{X: vert.X + vert2.X, Y: vert.Y + vert2.Y}
 }
