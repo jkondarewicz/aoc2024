@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
+	"github.comjkondarewicz/aoc2024/pkg/utils"
 )
 
 type Day12Part01 struct {
@@ -33,11 +34,11 @@ func (regionFence *regionFence) calculateRegion() int64 {
 
 func calculateRegionFences(plants map[aocmath.Vertex]rune, width int, height int) []regionFence {
 	regionFences := make([]regionFence, 0)
-	visited := make(map[aocmath.Vertex]struct{})
+	visited := utils.NewSet[aocmath.Vertex]()
 	for x := 0; x < width*2; x += 2 {
 		for y := 0; y < height*2; y += 2 {
 			position := aocmath.Vertex{X: x, Y: y}
-			if _, alreadyVisited := visited[position]; alreadyVisited {
+			if visited.Exists(position) {
 				continue
 			}
 			regionFences = append(regionFences, generateRegionFenceForPosition(position, plants, visited))
@@ -61,7 +62,7 @@ func countPerimeter(position aocmath.Vertex, plant rune, plants map[aocmath.Vert
 func generateRegionFenceForPosition(
 	position aocmath.Vertex,
 	plants map[aocmath.Vertex]rune,
-	visited map[aocmath.Vertex]struct{},
+	visited *utils.Set[aocmath.Vertex],
 ) regionFence {
 	plant := plants[position]
 	areaDirections := []aocmath.Vertex{{X: -2, Y: 0}, {X: 2, Y: 0}, {X: 0, Y: -2}, {X: 0, Y: 2}}
@@ -71,12 +72,12 @@ func generateRegionFenceForPosition(
 	for {
 		nPositions := make([]aocmath.Vertex, 0)
 		for _, currentPosition := range positions {
-			_, alreadyVisited := visited[currentPosition]
+			alreadyVisited := visited.Exists(currentPosition)
 			newPlant, newPlantExists := plants[currentPosition]
 			if !newPlantExists || newPlant != plant || alreadyVisited {
 				continue
 			}
-			visited[currentPosition] = struct{}{}
+			visited.Add(currentPosition)
 			area++
 			perimeter += countPerimeter(currentPosition, plant, plants)
 			for _, areaDirection := range areaDirections {
