@@ -22,3 +22,7 @@ func (set *Set[T]) Remove(data T) *Set[T] {
 	delete(set.data, data)
 	return set
 }
+
+func (set *Set[T]) Size() int {
+	return len(set.data)
+}

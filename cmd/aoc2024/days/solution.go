@@ -16,6 +16,7 @@ import (
 	day11 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/11"
 	day12 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/12"
 	day13 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/13"
+	day14 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/14"
 	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
 	"github.comjkondarewicz/aoc2024/internal/benchmark"
 )
@@ -36,15 +37,16 @@ func PerformAdventOfCode() {
 		{dir: "cmd/aoc2024/days/11/", resolverProvider: day11.Day11ResolverProvide, part1TestSolution: "55312", part2TestSolution: "65601038650482"},
 		{dir: "cmd/aoc2024/days/12/", resolverProvider: day12.Day12ResolverProvide, part1TestSolution: "1184", part2TestSolution: "368"},
 		{dir: "cmd/aoc2024/days/13/", resolverProvider: day13.Day13ResolverProvide, part1TestSolution: "480", part2TestSolution: "875318608908"},
+		{dir: "cmd/aoc2024/days/14/", resolverProvider: day14.Day14ResolverProvide, part1TestSolution: "12", part2TestSolution: "1"},
 	}
 	for index, dayMetadata := range daysMetadata {
 		day := index + 1
-		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"))
+		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"), true)
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for test case", error)
 			break
 		}
-		dayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "real"))
+		dayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "real"), false)
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for real case", error)
 			break
@@ -93,7 +95,7 @@ func printSolution(day int, part int, err error, result benchmark.BenchmarkResul
 
 type dayMetadata struct {
 	dir               string
-	resolverProvider  func(filename string) (solutionTypes.DayResolver, error)
+	resolverProvider  func(filename string, test bool) (solutionTypes.DayResolver, error)
 	part1TestSolution string
 	part2TestSolution string
 }

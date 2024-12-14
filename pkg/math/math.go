@@ -49,6 +49,9 @@ func (vert Vertex) DiffBetweenVertexes(vert2 Vertex) Vertex {
 	return Vertex{X: vert2.X - vert.X, Y: vert2.Y - vert.Y}
 }
 
+func (vert Vertex) Normalize() Vertex {
+	return NewVertex(Normalize(vert.X), Normalize(vert.Y))
+}
 func (vert Vertex) Diff() int {
 	return vert.Y - vert.X
 }

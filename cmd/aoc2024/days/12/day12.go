@@ -38,7 +38,7 @@ func (parser *parser) toDay12Part2() solutions.Day12Part02 {
 	}
 }
 
-func Day12ResolverProvide(filename string) (solutionTypes.DayResolver, error) {
+func Day12ResolverProvide(filename string, test bool) (solutionTypes.DayResolver, error) {
 	file, err := files.Open(filename)
 	if err != nil {
 		return solutionTypes.DayResolver{}, err

@@ -27,7 +27,7 @@ func (parser *parser) toDay4Part2() solutions.Day04Part02 {
 	}
 }
 
-func Day4ResolverProvide(filename string) (solutionTypes.DayResolver, error) {
+func Day4ResolverProvide(filename string, test bool) (solutionTypes.DayResolver, error) {
 	file, err := files.Open(filename)
 	if err != nil {
 		return solutionTypes.DayResolver{}, err
