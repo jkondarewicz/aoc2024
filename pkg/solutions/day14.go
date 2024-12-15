@@ -55,8 +55,8 @@ func (data *Day14Part02) Exec() (string, error) {
 }
 
 func printArea(robotsPositions *utils.Set[aocmath.Vertex], width int, height int) {
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
 			rune := '.'
 			if robotsPositions.Exists(aocmath.NewVertex(x, y)) {
 				rune = '#'

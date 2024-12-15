@@ -1,7 +1,19 @@
 package utils
 
+import "fmt"
+
 type Set[T comparable] struct {
 	data map[T]struct{}
+}
+
+func (set *Set[T]) ForEach(block func (value T)) {
+	for key := range set.data {
+		block(key)
+	}
+}
+
+func (set *Set[T]) String() string {
+	return fmt.Sprintf("%v", set.data)
 }
 
 func NewSet[T comparable]() *Set[T] {
