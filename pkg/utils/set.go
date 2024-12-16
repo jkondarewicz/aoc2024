@@ -12,6 +12,14 @@ func (set *Set[T]) ForEach(block func (value T)) {
 	}
 }
 
+func (set *Set[T]) Get() []T {
+	keys := make([]T, 0, len(set.data))
+	for k := range set.data {
+		keys = append(keys, k)
+	}
+	return keys
+}
+
 func (set *Set[T]) String() string {
 	return fmt.Sprintf("%v", set.data)
 }

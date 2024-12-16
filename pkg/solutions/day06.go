@@ -98,6 +98,9 @@ type visitedObstacle struct {
 func rotateRight(direction aocmath.Vertex) aocmath.Vertex {
 	return aocmath.Vertex{X: -direction.Y, Y: direction.X}
 }
+func rotateLeft(direction aocmath.Vertex) aocmath.Vertex {
+	return aocmath.Vertex{X: direction.Y, Y: -direction.X}
+}
 func isHorizontalMove(direction aocmath.Vertex) bool {
 	return direction.X != 0
 }
