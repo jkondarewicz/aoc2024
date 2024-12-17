@@ -18,33 +18,34 @@ import (
 	day13 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/13"
 	day14 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/14"
 	day15 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/15"
-	day16 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/16"
+	day17 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/17"
+
+	// day16 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/16"
 	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
 	"github.comjkondarewicz/aoc2024/internal/benchmark"
 )
 
-
 func PerformAdventOfCode() {
 	daysMetadata := []dayMetadata{
-		{dir: "cmd/aoc2024/days/01/", resolverProvider: day01.Day1ResolverProvide, part1TestSolution: "11", part2TestSolution: "31"},
-		{dir: "cmd/aoc2024/days/02/", resolverProvider: day02.Day2ResolverProvide, part1TestSolution: "2", part2TestSolution: "4"},
-		{dir: "cmd/aoc2024/days/03/", resolverProvider: day03.Day3ResolverProvide, part1TestSolution: "161", part2TestSolution: "48"},
-		{dir: "cmd/aoc2024/days/04/", resolverProvider: day04.Day4ResolverProvide, part1TestSolution: "18", part2TestSolution: "9"},
-		{dir: "cmd/aoc2024/days/05/", resolverProvider: day05.Day5ResolverProvide, part1TestSolution: "143", part2TestSolution: "123"},
-		{dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "6"},
-		{dir: "cmd/aoc2024/days/07/", resolverProvider: day07.Day7ResolverProvide, part1TestSolution: "3749", part2TestSolution: "11387"},
-		{dir: "cmd/aoc2024/days/08/", resolverProvider: day08.Day8ResolverProvide, part1TestSolution: "14", part2TestSolution: "34"},
-		{dir: "cmd/aoc2024/days/09/", resolverProvider: day09.Day9ResolverProvide, part1TestSolution: "1928", part2TestSolution: "2858"},
-		{dir: "cmd/aoc2024/days/10/", resolverProvider: day10.Day10ResolverProvide, part1TestSolution: "36", part2TestSolution: "81"},
-		{dir: "cmd/aoc2024/days/11/", resolverProvider: day11.Day11ResolverProvide, part1TestSolution: "55312", part2TestSolution: "65601038650482"},
-		{dir: "cmd/aoc2024/days/12/", resolverProvider: day12.Day12ResolverProvide, part1TestSolution: "1184", part2TestSolution: "368"},
-		{dir: "cmd/aoc2024/days/13/", resolverProvider: day13.Day13ResolverProvide, part1TestSolution: "480", part2TestSolution: "875318608908"},
-		{dir: "cmd/aoc2024/days/14/", resolverProvider: day14.Day14ResolverProvide, part1TestSolution: "12", part2TestSolution: "1"},
-		{dir: "cmd/aoc2024/days/15/", resolverProvider: day15.Day15ResolverProvide, part1TestSolution: "10092", part2TestSolution: "9021"},
-		{dir: "cmd/aoc2024/days/16/", resolverProvider: day16.Day16ResolverProvide, part1TestSolution: "7036", part2TestSolution: "100"},
+		{day: 1, dir: "cmd/aoc2024/days/01/", resolverProvider: day01.Day1ResolverProvide, part1TestSolution: "11", part2TestSolution: "31"},
+		{day: 2, dir: "cmd/aoc2024/days/02/", resolverProvider: day02.Day2ResolverProvide, part1TestSolution: "2", part2TestSolution: "4"},
+		{day: 3, dir: "cmd/aoc2024/days/03/", resolverProvider: day03.Day3ResolverProvide, part1TestSolution: "161", part2TestSolution: "48"},
+		{day: 4, dir: "cmd/aoc2024/days/04/", resolverProvider: day04.Day4ResolverProvide, part1TestSolution: "18", part2TestSolution: "9"},
+		{day: 5, dir: "cmd/aoc2024/days/05/", resolverProvider: day05.Day5ResolverProvide, part1TestSolution: "143", part2TestSolution: "123"},
+		{day: 6, dir: "cmd/aoc2024/days/06/", resolverProvider: day06.Day6ResolverProvide, part1TestSolution: "41", part2TestSolution: "6"},
+		{day: 7, dir: "cmd/aoc2024/days/07/", resolverProvider: day07.Day7ResolverProvide, part1TestSolution: "3749", part2TestSolution: "11387"},
+		{day: 8, dir: "cmd/aoc2024/days/08/", resolverProvider: day08.Day8ResolverProvide, part1TestSolution: "14", part2TestSolution: "34"},
+		{day: 9, dir: "cmd/aoc2024/days/09/", resolverProvider: day09.Day9ResolverProvide, part1TestSolution: "1928", part2TestSolution: "2858"},
+		{day: 10, dir: "cmd/aoc2024/days/10/", resolverProvider: day10.Day10ResolverProvide, part1TestSolution: "36", part2TestSolution: "81"},
+		{day: 11, dir: "cmd/aoc2024/days/11/", resolverProvider: day11.Day11ResolverProvide, part1TestSolution: "55312", part2TestSolution: "65601038650482"},
+		{day: 12, dir: "cmd/aoc2024/days/12/", resolverProvider: day12.Day12ResolverProvide, part1TestSolution: "1184", part2TestSolution: "368"},
+		{day: 13, dir: "cmd/aoc2024/days/13/", resolverProvider: day13.Day13ResolverProvide, part1TestSolution: "480", part2TestSolution: "875318608908"},
+		{day: 14, dir: "cmd/aoc2024/days/14/", resolverProvider: day14.Day14ResolverProvide, part1TestSolution: "12", part2TestSolution: "1"},
+		{day: 15, dir: "cmd/aoc2024/days/15/", resolverProvider: day15.Day15ResolverProvide, part1TestSolution: "10092", part2TestSolution: "9021"},
+		// {day: 16, dir: "cmd/aoc2024/days/16/", resolverProvider: day16.Day16ResolverProvide, part1TestSolution: "7036", part2TestSolution: "100"},
+		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "117440"},
 	}
-	for index, dayMetadata := range daysMetadata {
-		day := index + 1
+	for _, dayMetadata := range daysMetadata {
 		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"), true)
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for test case", error)
@@ -62,11 +63,12 @@ func PerformAdventOfCode() {
 			break
 		}
 		if part1Solution != dayMetadata.part1TestSolution {
-			fmt.Printf("Day %d part 1. Expected: [%s], got: [%s]", day, dayMetadata.part1TestSolution, part1Solution)
+			fmt.Printf("Day %d part 1. Expected: [%s], got: [%s]", dayMetadata.day, dayMetadata.part1TestSolution, part1Solution)
 			break
 		}
+		fmt.Printf("Day %d part 1 test passed\n", dayMetadata.day)
 		benchmarkedPart1, error := benchmark.Benchmark(dayResolver.ResolvePart1Function)
-		printSolution(day, 1, error, benchmarkedPart1)
+		printSolution(dayMetadata.day, 1, error, benchmarkedPart1)
 
 		part2Solution, error := testDayResolver.ResolvePart2Function.Exec()
 		if error != nil {
@@ -74,11 +76,12 @@ func PerformAdventOfCode() {
 			break
 		}
 		if part2Solution != dayMetadata.part2TestSolution {
-			fmt.Printf("Day %d part 2. Expected: [%s], got: [%s]", day, dayMetadata.part2TestSolution, part2Solution)
+			fmt.Printf("Day %d part 2. Expected: [%s], got: [%s]", dayMetadata.day, dayMetadata.part2TestSolution, part2Solution)
 			break
 		}
+		fmt.Printf("Day %d part 2 test passed\n", dayMetadata.day)
 		benchmarkedPart2, error := benchmark.Benchmark(dayResolver.ResolvePart2Function)
-		printSolution(day, 2, error, benchmarkedPart2)
+		printSolution(dayMetadata.day, 2, error, benchmarkedPart2)
 	}
 
 }
@@ -98,6 +101,7 @@ func printSolution(day int, part int, err error, result benchmark.BenchmarkResul
 }
 
 type dayMetadata struct {
+	day               int
 	dir               string
 	resolverProvider  func(filename string, test bool) (solutionTypes.DayResolver, error)
 	part1TestSolution string
