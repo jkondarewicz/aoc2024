@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
+	aocmath "github.com/jkondarewicz/aoc2024/pkg/math"
 )
 
 type Day13Part01 struct {

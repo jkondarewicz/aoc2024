@@ -5,7 +5,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.comjkondarewicz/aoc2024/pkg/utils"
+	"github.com/jkondarewicz/aoc2024/pkg/utils"
 )
 
 type Day17Part01 struct {

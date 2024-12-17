@@ -1,7 +1,7 @@
 package main
 
 import (
-	solution "github.comjkondarewicz/aoc2024/cmd/aoc2024/days"
+	solution "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days"
 )
 
 

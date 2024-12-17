@@ -1,6 +1,6 @@
 package solutionTypes
 
-import "github.comjkondarewicz/aoc2024/internal/benchmark"
+import "github.com/jkondarewicz/aoc2024/internal/benchmark"
 
 type DayResolver struct {
 	ResolvePart1Function benchmark.BenchmarkFunction[string]

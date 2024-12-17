@@ -3,26 +3,26 @@ package solution
 import (
 	"fmt"
 
-	day01 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/01"
-	day02 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/02"
-	day03 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/03"
-	day04 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/04"
-	day05 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/05"
-	day06 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/06"
-	day07 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/07"
-	day08 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/08"
-	day09 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/09"
-	day10 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/10"
-	day11 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/11"
-	day12 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/12"
-	day13 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/13"
-	day14 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/14"
-	day15 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/15"
-	day16 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/16"
-	day17 "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/17"
+	day01 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/01"
+	day02 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/02"
+	day03 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/03"
+	day04 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/04"
+	day05 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/05"
+	day06 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/06"
+	day07 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/07"
+	day08 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/08"
+	day09 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/09"
+	day10 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/10"
+	day11 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/11"
+	day12 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/12"
+	day13 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/13"
+	day14 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/14"
+	day15 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/15"
+	day16 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/16"
+	day17 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/17"
 
-	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
-	"github.comjkondarewicz/aoc2024/internal/benchmark"
+	solutionTypes "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/model"
+	"github.com/jkondarewicz/aoc2024/internal/benchmark"
 )
 
 func PerformAdventOfCode() {
@@ -46,6 +46,9 @@ func PerformAdventOfCode() {
 		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "164541160582845"},
 	}
 	for _, dayMetadata := range daysMetadata {
+		if omitDay[dayMetadata.day] {
+			continue
+		}
 		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"), true)
 		if error != nil {
 			printError("Error occured during ProvideDayResolver for test case", error)
@@ -106,4 +109,31 @@ type dayMetadata struct {
 	resolverProvider  func(filename string, test bool) (solutionTypes.DayResolver, error)
 	part1TestSolution string
 	part2TestSolution string
+}
+var omitDay map[int]bool = map[int]bool{
+	1: true,
+	2: true,
+	3: true,
+	4: true,
+	5: true,
+	6: true,
+	7: true,
+	8: true,
+	9: true,
+	10: true,
+	11: true,
+	12: true,
+	13: true,
+	14: true,
+	15: true,
+	16: true,
+	17: true,
+	18: true,
+	19: true,
+	20: true,
+	21: true,
+	22: true,
+	23: true,
+	24: true,
+	25: true,
 }

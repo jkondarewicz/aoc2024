@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"strings"
 
-	solutionTypes "github.comjkondarewicz/aoc2024/cmd/aoc2024/days/model"
-	"github.comjkondarewicz/aoc2024/internal/files"
-	"github.comjkondarewicz/aoc2024/pkg/solutions"
+	solutionTypes "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/model"
+	"github.com/jkondarewicz/aoc2024/internal/files"
+	"github.com/jkondarewicz/aoc2024/pkg/solutions"
 )
 
 

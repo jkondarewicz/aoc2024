@@ -3,7 +3,7 @@ package solutions
 import (
 	"strconv"
 
-	aocmath "github.comjkondarewicz/aoc2024/pkg/math"
+	aocmath "github.com/jkondarewicz/aoc2024/pkg/math"
 )
 
 var directions []aocmath.Vertex = []aocmath.Vertex{
