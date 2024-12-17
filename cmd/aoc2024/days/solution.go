@@ -43,7 +43,7 @@ func PerformAdventOfCode() {
 		{day: 14, dir: "cmd/aoc2024/days/14/", resolverProvider: day14.Day14ResolverProvide, part1TestSolution: "12", part2TestSolution: "1"},
 		{day: 15, dir: "cmd/aoc2024/days/15/", resolverProvider: day15.Day15ResolverProvide, part1TestSolution: "10092", part2TestSolution: "9021"},
 		// {day: 16, dir: "cmd/aoc2024/days/16/", resolverProvider: day16.Day16ResolverProvide, part1TestSolution: "7036", part2TestSolution: "100"},
-		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "117440"},
+		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "164541160582845"},
 	}
 	for _, dayMetadata := range daysMetadata {
 		testDayResolver, error := dayMetadata.resolverProvider(fmt.Sprintf("%s%s", dayMetadata.dir, "test"), true)
