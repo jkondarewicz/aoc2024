@@ -21,6 +21,7 @@ import (
 	day16 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/16"
 	day17 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/17"
 	day18 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/18"
+	day19 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/19"
 
 	solutionTypes "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/model"
 	"github.com/jkondarewicz/aoc2024/internal/benchmark"
@@ -46,6 +47,7 @@ func PerformAdventOfCode() {
 		{day: 16, dir: "cmd/aoc2024/days/16/", resolverProvider: day16.Day16ResolverProvide, part1TestSolution: "7036", part2TestSolution: "45"},
 		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "164541160582845"},
 		{day: 18, dir: "cmd/aoc2024/days/18/", resolverProvider: day18.Day18ResolverProvide, part1TestSolution: "22", part2TestSolution: "6,1"},
+		{day: 19, dir: "cmd/aoc2024/days/19/", resolverProvider: day19.Day19ResolverProvide, part1TestSolution: "6", part2TestSolution: ""},
 	}
 	for _, dayMetadata := range daysMetadata {
 		if omitDay[dayMetadata.day] {
@@ -130,8 +132,8 @@ var omitDay map[int]bool = map[int]bool{
 	15: true,
 	16: true,
 	17: true,
-	18: false,
-	19: true,
+	18: true,
+	19: false,
 	20: true,
 	21: true,
 	22: true,
