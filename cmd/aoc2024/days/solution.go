@@ -47,7 +47,7 @@ func PerformAdventOfCode() {
 		{day: 16, dir: "cmd/aoc2024/days/16/", resolverProvider: day16.Day16ResolverProvide, part1TestSolution: "7036", part2TestSolution: "45"},
 		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "164541160582845"},
 		{day: 18, dir: "cmd/aoc2024/days/18/", resolverProvider: day18.Day18ResolverProvide, part1TestSolution: "22", part2TestSolution: "6,1"},
-		{day: 19, dir: "cmd/aoc2024/days/19/", resolverProvider: day19.Day19ResolverProvide, part1TestSolution: "6", part2TestSolution: ""},
+		{day: 19, dir: "cmd/aoc2024/days/19/", resolverProvider: day19.Day19ResolverProvide, part1TestSolution: "6", part2TestSolution: "15"},
 	}
 	for _, dayMetadata := range daysMetadata {
 		if omitDay[dayMetadata.day] {

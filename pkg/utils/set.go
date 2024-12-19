@@ -24,6 +24,14 @@ func (set *Set[T]) String() string {
 	return fmt.Sprintf("%v", set.data)
 }
 
+func (set *Set[T]) Copy() *Set[T] {
+	new := NewSet[T]()
+	for key := range set.data {
+		new.Add(key)
+	}
+	return new
+}
+
 func NewSet[T comparable]() *Set[T] {
 	return &Set[T]{ data: make(map[T]struct{}) }
 }

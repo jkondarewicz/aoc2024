@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 
-	aocmath "github.com/jkondarewicz/aoc2024/pkg/math"
 	"github.com/jkondarewicz/aoc2024/pkg/utils"
 )
 
@@ -30,7 +29,7 @@ func (data *Day19Part01) Exec() (string, error) {
 	}
 	result := 0
 	for _, design := range data.DesiredDesigns {
-		if matching := designMatcher.isDesignMatching(design); matching {
+		if matching, _ := designMatcher.isDesignMatching(design); matching {
 			result++
 		}
 	}
@@ -38,7 +37,21 @@ func (data *Day19Part01) Exec() (string, error) {
 }
 
 func (data *Day19Part02) Exec() (string, error) {
-	return "", nil
+	designMatcher := &designMatcher{
+		towelPatterns: utils.NewSet[string](),
+		patternSizes:  utils.NewSet[int](),
+	}
+	for _, pattern := range data.PossibleTowelPatterns {
+		designMatcher.towelPatterns.Add(pattern)
+		designMatcher.patternSizes.Add(len(pattern))
+	}
+	hm := 0
+	for _, design := range data.DesiredDesigns {
+		if matching, man := designMatcher.isDesignMatching(design); matching {
+			hm += man
+		}
+	}
+	return strconv.Itoa(hm), nil
 }
 
 type designMatcher struct {
@@ -46,42 +59,58 @@ type designMatcher struct {
 	patternSizes  *utils.Set[int]
 }
 
-func (d *designMatcher) isDesignMatching(design string) bool {
-	m := &matcher{currentIndex: 0, reachedBy: 1}
+func (d *designMatcher) isDesignMatching(design string) (bool, int) {
+	m := &matcher{currentIndex: 0, visited: utils.NewSet[int]()}
 
 	mq := &mQueue{}
 	heap.Init(mq)
 	heap.Push(mq, m)
 	dl := len(design)
 
-	beenHere := make(map[aocmath.Vertex]int)
-	reachedEnd := 0
+	visited := utils.NewSet[int]()
+	all := make([]*matcher, 0)
+	found := make([]*matcher, 0)
 
 	for mq.Len() > 0 {
 		current := heap.Pop(mq).(*matcher)
+		if visited.Exists(current.currentIndex) {
+			for _, c := range all {
+				if c.visited.Exists(current.currentIndex) {
+					c.attached++
+				}
+			}
+			continue
+		}
+		visited.Add(current.currentIndex)
+		current.visited.Add(current.currentIndex)
+		all = append(all, current)
 		for _, offset := range d.patternSizes.Get() {
 			end := current.currentIndex + offset
-			_, visited := beenHere[aocmath.NewVertex(current.currentIndex, offset)]
-			if end > dl || visited {
+			if end > dl {
 				continue
 			}
-			beenHere[aocmath.NewVertex(current.currentIndex, offset)]++
 			searchingPattern := design[current.currentIndex:end]
 			if d.towelPatterns.Exists(searchingPattern) {
-				if end == dl {
-					reachedEnd++
+				if end == dl { //reached end
+					found = append(found, current)
+					continue
 				}
-				heap.Push(mq, &matcher{currentIndex: end})
+				heap.Push(mq, &matcher{currentIndex: end, visited: current.visited.Copy(), attached: current.attached})
 			}
 		}
 	}
-	fmt.Println("Reached end", reachedEnd)
-	return reachedEnd > 0
+	hm := 0
+	for _, f := range found {
+		hm += 1 + f.attached
+	}
+	fmt.Println("Desgin", design, hm)
+	return len(found) > 0, hm
 }
 
 type matcher struct {
 	currentIndex int
-	reachedBy    int
+	visited      *utils.Set[int]
+	attached     int
 }
 
 type mQueue []*matcher
