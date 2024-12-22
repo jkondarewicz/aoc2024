@@ -22,6 +22,7 @@ import (
 	day17 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/17"
 	day18 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/18"
 	day19 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/19"
+	day20 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/20"
 	day21 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/21"
 	day22 "github.com/jkondarewicz/aoc2024/cmd/aoc2024/days/22"
 
@@ -50,6 +51,7 @@ func PerformAdventOfCode() {
 		{day: 17, dir: "cmd/aoc2024/days/17/", resolverProvider: day17.Day17ResolverProvide, part1TestSolution: "6,4,6,0,4,5,7,2,7", part2TestSolution: "164541160582845"},
 		{day: 18, dir: "cmd/aoc2024/days/18/", resolverProvider: day18.Day18ResolverProvide, part1TestSolution: "22", part2TestSolution: "6,1"},
 		{day: 19, dir: "cmd/aoc2024/days/19/", resolverProvider: day19.Day19ResolverProvide, part1TestSolution: "6", part2TestSolution: "16"},
+		{day: 20, dir: "cmd/aoc2024/days/20/", resolverProvider: day20.Day20ResolverProvide, part1TestSolution: "0", part2TestSolution: "0"},
 		{day: 21, dir: "cmd/aoc2024/days/21/", resolverProvider: day21.Day21ResolverProvide, part1TestSolution: "126384", part2TestSolution: "16"},
 		{day: 22, dir: "cmd/aoc2024/days/22/", resolverProvider: day22.Day22ResolverProvide, part1TestSolution: "37990510", part2TestSolution: "23"},
 	}
@@ -138,9 +140,9 @@ var omitDay map[int]bool = map[int]bool{
 	17: true,
 	18: true,
 	19: true,
-	20: true,
+	20: false,
 	21: true,
-	22: false,
+	22: true,
 	23: true,
 	24: true,
 	25: true,

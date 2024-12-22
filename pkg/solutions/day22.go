@@ -22,17 +22,12 @@ func (data *Day22Part01) Exec() (string, error) {
 }
 
 func (data *Day22Part02) Exec() (string, error) {
+	maxBananas := 0
 	priceChangeMaxBananas := make(map[bananaPriceChange]int)
 	for _, secret := range data.Secrets {
-		calculateMaxBananas(secret, 2000, priceChangeMaxBananas)
+		maxBananas = calculateMaxBananas(secret, 2000, priceChangeMaxBananas, maxBananas)
 	}
-	mb := 0
-	for _, bananas := range priceChangeMaxBananas {
-		if mb < bananas {
-			mb = bananas
-		}
-	}
-	return strconv.Itoa(mb), nil
+	return strconv.Itoa(maxBananas), nil
 }
 
 var mod int64 = ((1 << 24) - 1)
@@ -44,7 +39,7 @@ func calculateNthSecret(secret int64, nth int) int64 {
 	return secret
 }
 
-func calculateMaxBananas(secret int64, nth int, priceChangeMaxBananas map[bananaPriceChange]int) {
+func calculateMaxBananas(secret int64, nth int, priceChangeMaxBananas map[bananaPriceChange]int, maxBananas int) int {
 	priceChanges := make([]struct {
 		price       int
 		priceChange int
@@ -69,9 +64,13 @@ func calculateMaxBananas(secret int64, nth int, priceChangeMaxBananas map[banana
 			if _, e := cbp[priceChange]; !e {
 				cbp[priceChange] = priceChanges[i].price
 				priceChangeMaxBananas[priceChange] = priceChangeMaxBananas[priceChange] + priceChanges[i].price 
+				if priceChangeMaxBananas[priceChange] > maxBananas {
+					maxBananas = priceChangeMaxBananas[priceChange]
+				}
 			}
 		}
 	}
+	return maxBananas
 }
 
 func calculateNextSecret(secret int64) int64 {
