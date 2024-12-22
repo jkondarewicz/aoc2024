@@ -2,7 +2,6 @@ package solutions
 
 import (
 	"container/heap"
-	"fmt"
 	"strconv"
 
 	"github.com/jkondarewicz/aoc2024/pkg/utils"
@@ -60,7 +59,7 @@ type designMatcher struct {
 }
 
 func (d *designMatcher) isDesignMatching(design string) (bool, int) {
-	m := &matcher{currentIndex: 0, visited: utils.NewSet[int]()}
+	m := &matcher{currentIndex: 0, visited: utils.NewSet[int](), patterns: make([]string, 0)}
 
 	mq := &mQueue{}
 	heap.Init(mq)
@@ -76,7 +75,7 @@ func (d *designMatcher) isDesignMatching(design string) (bool, int) {
 		if visited.Exists(current.currentIndex) {
 			for _, c := range all {
 				if c.visited.Exists(current.currentIndex) {
-					c.attached++
+					c.attached += 1 + current.attached
 				}
 			}
 			continue
@@ -95,15 +94,14 @@ func (d *designMatcher) isDesignMatching(design string) (bool, int) {
 					found = append(found, current)
 					continue
 				}
-				heap.Push(mq, &matcher{currentIndex: end, visited: current.visited.Copy(), attached: current.attached})
+				heap.Push(mq, &matcher{currentIndex: end, visited: current.visited.Copy(), attached: current.attached, patterns: append(current.patterns, searchingPattern)})
 			}
 		}
 	}
-	hm := 0
+	hm := len(found)
 	for _, f := range found {
-		hm += 1 + f.attached
+		hm += f.attached
 	}
-	fmt.Println("Desgin", design, hm)
 	return len(found) > 0, hm
 }
 
@@ -111,6 +109,7 @@ type matcher struct {
 	currentIndex int
 	visited      *utils.Set[int]
 	attached     int
+	patterns 	[]string
 }
 
 type mQueue []*matcher
