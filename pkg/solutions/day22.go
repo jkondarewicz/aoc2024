@@ -1,10 +1,7 @@
 package solutions
 
 import (
-	"fmt"
 	"strconv"
-
-	"github.com/jkondarewicz/aoc2024/pkg/utils"
 )
 
 type Day22Part01 struct {
@@ -18,71 +15,63 @@ type Day22Part02 struct {
 func (data *Day22Part01) Exec() (string, error) {
 	var res int64 = 0
 	for _, secret := range data.Secrets {
-		result, _ := calculateNthSecret(secret, 2000)
+		result := calculateNthSecret(secret, 2000)
 		res += result
 	}
 	return strconv.FormatInt(res, 10), nil
 }
 
 func (data *Day22Part02) Exec() (string, error) {
-	bananaPatterns := make([]bananaPrices, 0)
+	priceChangeMaxBananas := make(map[bananaPriceChange]int)
 	for _, secret := range data.Secrets {
-		_, bp := calculateNthSecret(secret, 2000)
-		bananaPatterns = append(bananaPatterns, bp)
+		calculateMaxBananas(secret, 2000, priceChangeMaxBananas)
 	}
-	allMaxBananas := 0
-	checkedChanges := utils.NewSet[bananaPriceChange]()
-	winningPattern := bananaPriceChange{}
-	for first, bp1 := range bananaPatterns {
-		for pattern, price := range bp1 {
-			if checkedChanges.Exists(pattern) {
-				continue
-			}
-			maxBananas := price
-			for second, bp2 := range bananaPatterns {
-				if first == second {
-					continue
-				}
-				var maxBananasGot int = bp2[pattern]
-				maxBananas += maxBananasGot
-			}
-			if maxBananas > allMaxBananas {
-				allMaxBananas = maxBananas
-				winningPattern = pattern
-			}
-			checkedChanges.Add(pattern)
+	mb := 0
+	for _, bananas := range priceChangeMaxBananas {
+		if mb < bananas {
+			mb = bananas
 		}
 	}
-
-	fmt.Println(winningPattern)
-	return strconv.Itoa(allMaxBananas), nil
+	return strconv.Itoa(mb), nil
 }
 
 var mod int64 = ((1 << 24) - 1)
-func calculateNthSecret(secret int64, nth int) (int64, bananaPrices) {
-	priceChanges := make([][]int, 0)
+
+func calculateNthSecret(secret int64, nth int) int64 {
+	for i := 0; i < nth; i++ {
+		secret = calculateNextSecret(secret)
+	}
+	return secret
+}
+
+func calculateMaxBananas(secret int64, nth int, priceChangeMaxBananas map[bananaPriceChange]int) {
+	priceChanges := make([]struct {
+		price       int
+		priceChange int
+	}, 0)
+	cbp := make(map[bananaPriceChange]int)
 	for i := 0; i < nth; i++ {
 		prevSecret := secret
 		secret = calculateNextSecret(secret)
 		prevBananas := prevSecret % 10
 		bananas := secret % 10
-		priceChanges = append(priceChanges, []int{int(bananas), int(bananas - prevBananas)})
-	}
-	prices := make(map[bananaPriceChange]int)
-	for i := 0; i < nth-3; i++ {
-		priceChange := bananaPriceChange{
-			first:  priceChanges[i][1],
-			second: priceChanges[i+1][1],
-			third:  priceChanges[i+2][1],
-			fourth: priceChanges[i+3][1],
+		priceChanges = append(priceChanges, struct {
+			price       int
+			priceChange int
+		}{price: int(bananas), priceChange: int(bananas - prevBananas)})
+		if i >= 3 {
+			priceChange := bananaPriceChange{
+				first:  priceChanges[i-3].priceChange,
+				second: priceChanges[i-2].priceChange,
+				third:  priceChanges[i-1].priceChange,
+				fourth: priceChanges[i-0].priceChange,
+			}
+			if _, e := cbp[priceChange]; !e {
+				cbp[priceChange] = priceChanges[i].price
+				priceChangeMaxBananas[priceChange] = priceChangeMaxBananas[priceChange] + priceChanges[i].price 
+			}
 		}
-		newPrice := priceChanges[i+3][0]
-		prevPrice := prices[priceChange]
-		if prevPrice < newPrice {
-			prices[priceChange] = newPrice
-		}
 	}
-	return secret, bananaPrices(prices)
 }
 
 func calculateNextSecret(secret int64) int64 {
