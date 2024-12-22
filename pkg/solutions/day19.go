@@ -59,7 +59,7 @@ type designMatcher struct {
 }
 
 func (d *designMatcher) isDesignMatching(design string) (bool, int) {
-	m := &matcher{currentIndex: 0, visited: utils.NewSet[int](), patterns: make([]string, 0)}
+	m := &matcher{currentIndex: 0, visited: utils.NewSet[int](),}
 
 	mq := &mQueue{}
 	heap.Init(mq)
@@ -82,7 +82,6 @@ func (d *designMatcher) isDesignMatching(design string) (bool, int) {
 		}
 		visited.Add(current.currentIndex)
 		current.visited.Add(current.currentIndex)
-		all = append(all, current)
 		for _, offset := range d.patternSizes.Get() {
 			end := current.currentIndex + offset
 			if end > dl {
@@ -94,7 +93,9 @@ func (d *designMatcher) isDesignMatching(design string) (bool, int) {
 					found = append(found, current)
 					continue
 				}
-				heap.Push(mq, &matcher{currentIndex: end, visited: current.visited.Copy(), attached: current.attached, patterns: append(current.patterns, searchingPattern)})
+				next := &matcher{currentIndex: end, visited: current.visited.Copy(), attached: current.attached}
+				all = append(all, next)
+				heap.Push(mq, next)
 			}
 		}
 	}
@@ -109,7 +110,6 @@ type matcher struct {
 	currentIndex int
 	visited      *utils.Set[int]
 	attached     int
-	patterns 	[]string
 }
 
 type mQueue []*matcher
@@ -117,7 +117,7 @@ type mQueue []*matcher
 func (pq mQueue) Less(i, j int) bool {
 	a := pq[i]
 	b := pq[j]
-	return a.currentIndex > b.currentIndex
+	return a.currentIndex < b.currentIndex
 }
 func (pq mQueue) Len() int { return len(pq) }
 func (pq mQueue) Swap(i, j int) {
